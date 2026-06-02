@@ -19,6 +19,20 @@ WITH
     ),
 
 
+        -- hosp_id checks
+    missing_hosp_id AS (
+      SELECT
+        id,
+        date_today,
+        'hosp_id' AS variable,
+        'Missing hosp_id' AS issue,
+        hosp_id AS current_value
+      FROM neonatal_core
+      WHERE (hosp_id IS NULL OR TRIM(hosp_id) = '')
+        AND CAST(date_today AS TIMESTAMP) >= '2025-05-08 10:47:19'
+    ),
+
+
 
 
 
@@ -52,6 +66,8 @@ WITH
     -- combine all checks
     all_issues AS (
       SELECT * FROM missing_document_source
+      UNION ALL
+      SELECT * FROM missing_hosp_id
       
 
 

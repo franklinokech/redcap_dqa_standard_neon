@@ -27,6 +27,9 @@ services:
     restart: "no"
     networks:
       - dqa_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "redcap.local:host-gateway"
     # Resource limits
     deploy:
       resources:
